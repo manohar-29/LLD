@@ -1,68 +1,70 @@
 #include <iostream>
 using namespace std;
 
-enum class LogLevel {
-    DEBUG,
-    INFO,
-    ERROR
+enum class Type {
+    SOFA,
+    TABLE,
+    CHAIR
 };
 
-class ILogger {
+class Furniture {
     public:
-        virtual void log(const string& msg) = 0;
-        virtual ~ILogger() {}
+        virtual void display(const string& name) = 0;
+        virtual ~Furniture() {}
 };
 
-class InfoLogger : public ILogger {
+class Sofa : public Furniture {
     public:
-        void log(const string& msg)
+        void display(const string& name)
         {
-            cout<<"INFO : "<<msg<<endl;
+            cout<<"SOFA : "<<name<<endl;
         }
 };
 
-class ErrorLogger : public ILogger{
+class Table : public Furniture{
     public:
-        void log(const string& msg)
+        void display(const string& name)
         {
-            cout<<"ERROR : "<<msg<<endl;
+            cout<<"TABLE : "<<msg<<endl;
         }
 };
 
-class DebugLogger : public ILogger {
+class Chair : public Furniture {
     public:
-        void log(const string& msg)
+        void display(const string& name)
         {
-            cout << "DEBUG : " << msg << endl;
+            cout << "CHAIR : " << name << endl;
         }
 };
 
-class LoggerFactory {
+class FurnitureFactory {
     public:
-        static ILogger* createLogger(LogLevel pLogLevel)
+        static Furniture* createLogger(LogLevel pLogLevel)
         {
-            if(pLogLevel == LogLevel::DEBUG)
-                return new DebugLogger();
-            if(pLogLevel == LogLevel::INFO)
-                return new InfoLogger();
-            if(pLogLevel == LogLevel::ERROR)
-                return new ErrorLogger();
+            if(pLogLevel == LogLevel::CHAIR)
+                return new Chair();
+            if(pLogLevel == LogLevel::SOFA)
+                return new Sofa();
+            if(pLogLevel == LogLevel::TABLE)
+                return new Table();
             return nullptr;
         }
 };
 
 int main() {
-    ILogger* debugLogger = LoggerFactory::createLogger(LogLevel::DEBUG);
-    ILogger* infoLogger = LoggerFactory::createLogger(LogLevel::INFO);
-    ILogger* errorLogger = LoggerFactory::createLogger(LogLevel::ERROR);
+    
+    Furniture* sofa = FurnitureFactory::createLogger(LogLevel::SOFA);
+    Furniture* table = FurnitureFactory::createLogger(LogLevel::TABLE);
+    Furniture* chair = FurnitureFactory::createLogger(LogLevel::CHAIR);
 
-    debugLogger->log("This is a debug log msg");
-    infoLogger->log("This is an info log msg");
-    errorLogger->log("This is an error log msg");
+   
+    sofa->display("This is an sofa display name");
+    table->display("This is an table display name");
+    chair->display("This is a chair display name");
 
-    delete debugLogger;
-    delete infoLogger;
-    delete errorLogger;
+    delete sofa;
+    delete table;
+    delete chair;
 
     return 0;
 }
