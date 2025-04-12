@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+
+// Abstract base class representing a prototype for cuisine
+class Cuisine {
+public:
+    virtual Cuisine* clone() = 0;
+    virtual void display() = 0;
+    virtual ~Cuisine() {}
+};
+
+// Concrete prototype class representing a Indian cuisine
+class IndianCuisine : public Cuisine {
+private:
+    string name;
+    double price;
+
+public:
+    IndianCuisine(const string& name, double price)
+    {
+        this->name=name;
+        this->price=price;
+    }
+
+    Cuisine* clone() override {
+        return new IndianCuisine(*this); // Copy constructor used for cloning
+    }
+
+    void display() override {
+        cout << "Item: " << name << endl;
+        cout << "Price: $" << price << endl;
+    }
+};
+
+int main() {
+    // Create prototype instances of cuisine
+    Cuisine* indianCuisine = new IndianCuisine("Chicken", 9999);
+
+    // Clone the prototypes to create new cuisine
+    Cuisine* indianCuisineClone = indianCuisine->clone();
+
+    // Display product details
+    indianCuisine->display();
+    indianCuisineClone->display();
+
+    // Clean up
+    delete indianCuisine;
+    delete indianCuisineClone;
+
+    return 0;
+}
