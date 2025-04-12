@@ -1,0 +1,86 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Abstract Product: Furniture Item
+class Furniture {
+public:
+    virtual void display() = 0;
+};
+
+// Concrete Products: Sofa, Chair, Table
+class Sofa : public Furniture {
+public:
+    void display() override {
+        cout << "Sofa" << endl;
+    }
+};
+
+class Chair : public Furniture {
+public:
+    void display() override {
+        cout << "Chair" << endl;
+    }
+};
+
+class Table : public Furniture {
+public:
+    void display() override {
+        cout << "Table" << endl;
+    }
+};
+
+// Abstract Creator: Furniture Factory
+class FurnitureFactory {
+public:
+    virtual Furniture* createFurniture() = 0;
+};
+
+// Concrete Creators: Sofa Factory, Chair Factory, Table Factory
+class SofaFactory : public FurnitureFactory {
+public:
+    Furniture* createFurniture() override {
+        return new Sofa();
+    }
+};
+
+class ChairFactory : public FurnitureFactory {
+public:
+    Furniture* createFurniture() override {
+        return new Chair();
+    }
+};
+
+class TableFactory : public FurnitureFactory {
+public:
+    Furniture* createFurniture() override {
+        return new Table();
+    }
+};
+
+int main() {
+    // Create factories for different types of furniture
+    FurnitureFactory* sofaFactory = new SofaFactory();
+    FurnitureFactory* chairFactory = new ChairFactory();
+    FurnitureFactory* tableFactory = new TableFactory();
+
+    // Create furniture objects using the factory methods
+    Furniture* sofa = sofaFactory->createFurniture();
+    Furniture* chair = chairFactory->createFurniture();
+    Furniture* table = tableFactory->createFurniture();
+
+    // Display the created furniture items
+    sofa->display();
+    chair->display();
+    table->display();
+
+    // Clean up objects
+    delete sofaFactory;
+    delete chairFactory;
+    delete tableFactory;
+    delete sofa;
+    delete chair;
+    delete table;
+
+    return 0;
+}
