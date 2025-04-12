@@ -39,13 +39,13 @@ class Chair : public Furniture {
 
 class FurnitureFactory {
     public:
-        static Furniture* createLogger(LogLevel pLogLevel)
+        static Furniture* createFurniture(Type type)
         {
-            if(pLogLevel == LogLevel::CHAIR)
+            if(type == Type::CHAIR)
                 return new Chair();
-            if(pLogLevel == LogLevel::SOFA)
+            if(type == Type::SOFA)
                 return new Sofa();
-            if(pLogLevel == LogLevel::TABLE)
+            if(type == Type::TABLE)
                 return new Table();
             return nullptr;
         }
@@ -53,10 +53,9 @@ class FurnitureFactory {
 
 int main() {
     
-    Furniture* sofa = FurnitureFactory::createLogger(LogLevel::SOFA);
-    Furniture* table = FurnitureFactory::createLogger(LogLevel::TABLE);
-    Furniture* chair = FurnitureFactory::createLogger(LogLevel::CHAIR);
-
+    Furniture* sofa = FurnitureFactory::createFurniture(Type::SOFA);
+    Furniture* table = FurnitureFactory::createFurniture(Type::TABLE);
+    Furniture* chair = FurnitureFactory::createFurniture(Type::CHAIR);
    
     sofa->display("This is an sofa display name");
     table->display("This is an table display name");
