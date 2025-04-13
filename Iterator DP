@@ -26,7 +26,6 @@ class Iterator {
         virtual ~Iterator() {}
         virtual Product* first() = 0;
         virtual Product* next() = 0;
-        virtual bool hasNext() = 0;
 };
 
 // Concrete iterator for the product collection
@@ -53,10 +52,6 @@ class ProductIterator : public Iterator {
                 return products[++current];
             }
             return nullptr;
-        }
-
-        bool hasNext() {
-            return 
         }
 };
 
