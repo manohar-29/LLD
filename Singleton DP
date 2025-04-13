@@ -2,32 +2,32 @@
 using namespace std;
 
 /*
-Here Double checked means 2 if-conditions. If if-null checks are removed then code is thread safe without double-checked locking and is 
-expensive. If mutex is removed then code is not thread safe. 
+Here Double checked means 2 if-conditions. If if-null checks are removed then code is thread safe without double-checked 
+locking and is expensive. If mutex is removed then code is not thread safe. 
 */
 
-class PaymentGatewayManager
+class PaymentGateway
 {
 
 private:
-    PaymentGatewayManager()
+    PaymentGateway()
     {
         cout << "Payment Gateway Manager initialized." << endl;
     }
 
-    static PaymentGatewayManager *instance;
+    static PaymentGateway *instance;
 
     static mutex mtx;
 
 public:
-    static PaymentGatewayManager *getInstance()
+    static PaymentGateway *getInstance()
     {
         if (instance == nullptr)
         {
             mtx.lock();
             if (instance == nullptr)
             {
-                instance = new PaymentGatewayManager();
+                instance = new PaymentGateway();
             }
             mtx.unlock();
         }
@@ -40,19 +40,19 @@ public:
     }
 };
 
-PaymentGatewayManager *PaymentGatewayManager::instance = nullptr;
+PaymentGateway *PaymentGateway::instance = nullptr;
 
-mutex PaymentGatewayManager::mtx;
+mutex PaymentGateway::mtx;
 
 int main()
 {
 
-    PaymentGatewayManager *paymentGateway = PaymentGatewayManager::getInstance();
+    PaymentGateway *paymentGateway = PaymentGateway::getInstance();
 
-    paymentGateway->processPayment(100.0);
+    paymentGateway->processPayment(1000);
 
     // Attempt to create another instance (should return the existing instance)
-    PaymentGatewayManager *anotherPaymentGateway = PaymentGatewayManager::getInstance();
+    PaymentGateway *anotherPaymentGateway = PaymentGateway::getInstance();
 
     // Check if both instances are the same.
     if (paymentGateway == anotherPaymentGateway)
