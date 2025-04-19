@@ -54,20 +54,20 @@ public:
     }
 };
 
-class Team : public EmployeeComponent {
+class Organization : public EmployeeComponent {
 private:
     string name;
     vector<EmployeeComponent*> members;
 
 public:
-    Team(string teamName) : name(teamName) {}
+    Organization(string orgName) : name(orgName) {}
 
     void addMember(EmployeeComponent* member) {
         members.push_back(member);
     }
 
     void displayInfo() override {
-        cout << "Team: " << name << endl;
+        cout << "Organization: " << name << endl;
         for (auto& member : members) {
             member->displayInfo();
         }
@@ -87,16 +87,16 @@ int main() {
     EmployeeComponent* keerti = new Employee("Keerti", 100.0); //Level2
     EmployeeComponent* amit = new Employee("Amit", 200.0); //Level2
 
-    Team* sales = new Team("Sales"); //Level1
+    Department* sales = new Department("Sales"); //Level1
     sales->addMember(keerti);
     sales->addMember(amit);
 
     EmployeeComponent* bob = new Employee("Bob", 50.0); //Level2
 
-    Team* marketing = new Team("Marketing"); //Level1
+    Department* marketing = new Department("Marketing"); //Level1
     marketing->addMember(bob);
 
-    Department* headOffice = new Department("Head Office"); //Level0
+    Organization* headOffice = new Organization("Head Office"); //Level0
     headOffice->addMember(sales);
     headOffice->addMember(marketing);
 
