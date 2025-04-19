@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+
+// Subsystem 1: CPU
+class CPU {
+public:
+    void powerOn() {
+        cout << "CPU is powered on." << endl;
+    }
+
+    void powerOff() {
+        cout << "CPU is powered off." << endl;
+    }
+};
+
+// Subsystem 2: Memory
+class Memory {
+public:
+    void initialize() {
+        cout << "Memory is initialized." << endl;
+    }
+};
+
+// Subsystem 3: Disk Drive
+class DiskDrive {
+public:
+    void bootFromDisk() {
+        cout << "Booting from the disk drive." << endl;
+    }
+};
+
+
+// Facade: Computer System
+class ComputerSystemFacade {
+private:
+    CPU cpu;
+    Memory memory;
+    DiskDrive diskDrive;
+
+public:
+    void startComputer() {
+        cout << "Starting the computer..." << endl;
+        cpu.powerOn();
+        memory.initialize();
+        diskDrive.bootFromDisk();
+    }
+
+    void stopComputer() {
+        cpu.powerOff();
+        cout << "Shutting down the computer..." << endl;
+    }
+};
+
+int main() {
+    ComputerSystemFacade computer;
+
+    computer.startComputer();
+    computer.stopComputer();
+
+    return 0;
+}
