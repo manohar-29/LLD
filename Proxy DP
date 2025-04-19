@@ -1,0 +1,50 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Subject Interface
+class Internet {
+public:
+    virtual void connectTo(string site) = 0;
+    virtual ~Internet() {}
+};
+
+// Real Subject
+class RealInternet : public Internet {
+public:
+    void connectTo(string site) {
+        cout << "Connecting to " << site << endl;
+    }
+};
+
+// Proxy
+class ProxyInternet : public Internet {
+private:
+    RealInternet* realInternet;
+    string user;
+
+public:
+    ProxyInternet(string user) : user(user), realInternet(nullptr) {}
+
+    void connectTo() {
+        if (!realInternet) {
+            realInternet = new RealInternet();
+        }
+        realInternet->connectTo(site);
+    }
+
+    ~ProxyInternet() {
+        delete realInternet;
+    }
+};
+
+// Usage
+int main() {
+    Internet* internet = new ProxyInternet("guest");
+    internet->connectTo("example.com");
+    internet->connectTo("restricted.com"); //Cannot connect as same internet object used which already initialized realInternet(!nullptr).
+
+    delete internet;
+
+    return 0;
+}
