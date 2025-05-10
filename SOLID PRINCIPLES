@@ -1,0 +1,190 @@
+SOLID PRINCIPLES:
+Defines the principles to write extensible and reusable code. SOLID principles are theory based and design patterns are implementing those principles in practical. 
+
+
+
+
+Single responsibility principle:
+A class should have only one reason to change i.e., each class should have a single responsibility. SRP is subjective and it depends on context of application. 
+C++ code:
+// Before applying SRP
+class User {
+public:
+    void create(string username) {
+        cout << "User created: " << username;
+    }
+    void saveToDatabase(string username) {
+        cout << "User saved to database: " << username;
+    }
+};
+Explanation: Changes in storing to database has nothing to do with create.
+// After applying SRP
+class CreateUser {
+public:
+    void create(string username) {
+        cout << "User created: " << username;
+    }
+};
+class StoreUser {
+public:
+    void saveToDatabase(string username) {
+        cout << "User saved to database: " << username;
+    }
+};
+
+
+
+
+Open close principle:
+A class should be open for extension but closed for modification. It should allow us to add new functionality if needed without modifying existing code. 
+If we are adding various functions in same class using some if-else conditions then if you want to test new functionality then you have to test previous conditions as well. For example, if shape is circle then do this else if, else and so on. Instead if you extend class with this new functionality then we can just test that specific functionality’s class. Once code is tested, modifications are not allowed.  
+C++ code:
+class Shape {
+public:
+    virtual void draw() = 0;
+};
+class Circle : public Shape {
+public:
+    void draw() {
+        cout << "Drawing Circle";
+    }
+};
+class Square : public Shape {
+public:
+    void draw() {
+        cout << "Drawing Square";
+    }
+};
+Explanation: Shape class should support creating any number of subclasses without modifying the existing code for Shape.
+
+
+
+
+Liskov substitution principle:
+When a class is inherited, super class object should be able to get replaced by sub class object without breaking behaviour of whole program. Subclass should extend capability of super class but not narrow it down i.e., when you are extending base class then in derived class you have to implement all base class’s properties.
+C++ code:
+class Shape {
+ public:
+virtual int getArea() {  return 0;  }
+}
+class Rectangle : public Shape {
+    int width, height;
+    public:
+ void setWidth(int width) {
+        this->width = width;
+    }
+ void setHeight(int height) {
+        this->height = height;
+    }
+int getArea() {
+        return width * height;
+    }
+}
+int main() {
+    Shape* rectangle = new Rectangle();  
+    Rectangle* rect = dynamic_cast<Rectangle*>(rectangle);
+    rect->setWidth(4); rect->setHeight(5);
+    cout << "Rectangle Area: " << rect->getArea() << endl;
+    delete rectangle;  
+    return 0;
+}
+Explanation: As subclass was able to inherit all properties so superclass object can be casted to subclass object.
+
+
+
+
+Interface segregation principle:
+A class should not be forced to implement methods (of an interface) it doesn't use. Instead, break large interfaces into smaller and specific ones.
+C++ code:
+class Staff {
+public:
+    virtual void serveCustomer() = 0;
+    virtual void cookDish() = 0;
+};
+class Server: public Staff {
+public:
+    void serveCustomer() {
+        cout << "Serving";
+    }
+    void cookDish() {
+        cout << "Not my job";
+    }
+};
+class Chef: public Staff {
+public:
+    void serveCustomer() {
+        cout << "Not my job";
+    }
+    void cookDish() {
+        cout << "Cooking";
+    }
+};
+Example: Swiggy has 3 entities i.e., customers, delivery boys, restaurants. If KYC() has to be only in DB, R then make Swiggy such that there are 2 entities users and partners(has KYC()). DB, R extends partners class and user class is nothing but customer class. Instead of forcing customers to add dummy KYC() that is not needed from swiggy class create a new partner class. 
+
+
+
+
+Dependency Inversion Principle:
+It states that high-level modules should not depend on low-level modules. Instead, both should depend on abstractions(interfaces). There should be an abstraction layer in between HLM and LLM so that modifying LLM won’t affect HLM. Promotes loose coupling among classes. 
+C++ code:
+#include <iostream>
+using namespace std;
+// Abstraction
+class Device {
+public:
+    virtual void turnOn() = 0;
+    virtual void turnOff() = 0;
+    virtual ~Device() {}
+};
+
+// Concrete Implementation 1
+class TV : public Device {
+public:
+    void turnOn() override {
+        cout << "Turning on the TV" << endl;
+    }
+    void turnOff() override {
+        cout << "Turning off the TV" << endl;
+    }
+};
+// Concrete Implementation 2
+class Radio : public Device {
+public:
+    void turnOn() override {
+        cout << "Turning on the Radio" << endl;
+    }
+    void turnOff() override {
+        cout << "Turning off the Radio" << endl;
+    }
+};
+
+// High-level Module
+class RemoteControl {
+    Device* device;
+public:
+    RemoteControl(Device* device)
+    {
+            this->device=device;
+    }
+    void pressPowerButton(bool powerOn) {
+        if (powerOn) {
+            device->turnOn();
+        } else {
+            device->turnOff();
+        }
+    }
+};
+
+int main() {
+    Device* tv = new TV();
+    Device* radio = new Radio();
+
+    RemoteControl TVRemoteObj(tv);
+    RemoteControl RadioRemoteObj (radio);
+   TVRemoteObj.pressPowerButton(true);  
+    RadioRemoteObj.pressPowerButton(false); 
+    return 0;
+} 
+Explanation: Abstraction (Device Interface) defines the common behaviour and concrete implementations (TV or Radio) are LLM. HLM(Remote Control) does not depend on LLM(TV or Radio) but depends on the Device interface. You can add new device types like AC(on/off) without modifying the HLM(Remote Control) code by simply implementing the AL (Device interface).
+RemoteControl has 'HAS-A' or Composition relation with Device i.e., RemoteControl has-a Device “Device* device;”, this allows RemoteControl to use the functionality of Device via a pointer, without being a Device i.e., without extending Device. As methods are virtual, based on object type, specific functions will be called.
+
