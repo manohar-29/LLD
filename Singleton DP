@@ -1,10 +1,8 @@
 #include <iostream>
 using namespace std;
 
-/*
-Here Double checked means 2 if-conditions. If if-null checks are removed then code is thread safe without double-checked 
-locking and is expensive. If mutex is removed then code is not thread safe. 
-*/
+/*Here Double checked means 2 if-conditions. If if-null checks(without double-checked locking) are 
+removed then code is thread safe but expensive. If mutex is removed then code is not thread safe.*/
 
 class PaymentGateway
 {
