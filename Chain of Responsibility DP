@@ -4,9 +4,9 @@ using namespace std;
 // Define the abstract base class for order handlers.
 class OrderHandler {
     protected:
-        OrderHandler* nextHandler;
+        OrderHandler* orderHandler;
     public:
-        OrderHandler(OrderHandler* nextHandler) : nextHandler(nextHandler) {}
+        OrderHandler(OrderHandler* orderHandler) : orderHandler(orderHandler) {}
 
         virtual void processOrder(const string& order) = 0;
 };
