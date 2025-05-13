@@ -97,8 +97,7 @@ int main() {
    /*
    //Add setters to choose successor or next handler on run-time
    //Hanlder will have setSuccessor func
-    orderValidation.setSuccessor(paymentProcessing);
-    paymentProcessing.setSuccessor(shipping);
+    paymentProcessingHandler.setSuccessor(generateBill);
    */
 
     return 0;
