@@ -26,7 +26,7 @@ private:
 public:
     ProxyInternet(string user) : user(user), realInternet(nullptr) {}
 
-    void connectTo() {
+    void connectTo(string site) {
         if (!realInternet) {
             realInternet = new RealInternet();
         }
