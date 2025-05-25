@@ -1,46 +1,37 @@
+/* forward declaration is necessary when you reference a class before it's fully defined. Line6-Line11 && Line17-Line47. */
+
 #include <iostream>
 using namespace std;
 
+class TrafficLight;  // Forward declaration
+
+// State Interface
 class TrafficLightState {
 public:
-    virtual void handle() = 0;
-    virtual ~TrafficLightState() = default;
+    virtual void handle(TrafficLight* context) = 0;
+    virtual ~TrafficLightState() {}
 };
 
-class RedState : public TrafficLightState {
-public:
-    void handle() override {
-        cout << "RED: Stop for 60 seconds\n";
-    }
-};
+// Forward declaration of concrete states so they can be used inside each other
+class RedState;
+class YellowState;
+class GreenState;
 
-class YellowState : public TrafficLightState {
-public:
-    void handle() override {
-        cout << "YELLOW: Prepare to stop for 5 seconds\n";
-    }
-};
-
-class GreenState : public TrafficLightState {
-public:
-    void handle() override {
-        cout << "GREEN: Go for 45 seconds\n";
-    }
-};
-
+// Traffic Light (Context)
 class TrafficLight {
 private:
     TrafficLightState* currentState;
+
 public:
     TrafficLight() : currentState(new RedState()) {}
 
     void setState(TrafficLightState* newState) {
         delete currentState;       // Clean up old state
-        currentState = newState;   // Transition to new state
+        currentState = newState;
     }
 
     void operate() {
-        currentState->handle();    // Delegate to current state
+        currentState->handle(this);
     }
 
     ~TrafficLight() {
@@ -48,13 +39,39 @@ public:
     }
 };
 
+// Concrete States
+class RedState : public TrafficLightState {
+public:
+    void handle(TrafficLight* context) override {
+        cout << "RED: Stop for 60 seconds\n";
+        context->setState(new YellowState());  // Auto-transition
+    }
+};
+
+class YellowState : public TrafficLightState {
+public:
+    void handle(TrafficLight* context) override {
+        cout << "GREEN: Go for 45 seconds\n";
+        context->setState(new GreenState());  // Auto-transition
+    }
+};
+
+class GreenState : public TrafficLightState {
+public:
+    void handle(TrafficLight* context) override {
+        cout << "YELLOW: Prepare to stop for 5 seconds\n";
+        context->setState(new RedState());  // Loop back to Red
+    }
+};
+
+// Client Code
 int main() {
     TrafficLight trafficLight;
-    // Simulate traffic light cycles
-    trafficLight.operate();  // RED
-    trafficLight.setState(new YellowState());
-    trafficLight.operate();  // YELLOW
-    trafficLight.setState(new GreenState());
-    trafficLight.operate();  // GREEN
+
+    // Simulate multiple state transitions
+    for (int i = 0; i < 6; ++i) {
+        trafficLight.operate();
+    }
+
     return 0;
 }
