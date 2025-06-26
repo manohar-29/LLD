@@ -1,3 +1,76 @@
+// Abstract Product: Furniture Item
+interface Furniture {
+    void display();
+}
+
+// Concrete Products: Sofa, Chair, Table
+class Sofa implements Furniture {
+    public void display() {
+        System.out.println("Sofa");
+    }
+}
+
+class Chair implements Furniture {
+    public void display() {
+        System.out.println("Chair");
+    }
+}
+
+class Table implements Furniture {
+    public void display() {
+        System.out.println("Table");
+    }
+}
+
+// Abstract Creator: Furniture Factory
+interface FurnitureFactory {
+    Furniture createFurniture();
+}
+
+// Concrete Creators: SofaFactory, ChairFactory, TableFactory
+class SofaFactory implements FurnitureFactory {
+    public Furniture createFurniture() {
+        return new Sofa();
+    }
+}
+
+class ChairFactory implements FurnitureFactory {
+    public Furniture createFurniture() {
+        return new Chair();
+    }
+}
+
+class TableFactory implements FurnitureFactory {
+    public Furniture createFurniture() {
+        return new Table();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create factories for different types of furniture
+        FurnitureFactory sofaFactory = new SofaFactory();
+        FurnitureFactory chairFactory = new ChairFactory();
+        FurnitureFactory tableFactory = new TableFactory();
+
+        // Create furniture objects using the factory methods
+        Furniture sofa = sofaFactory.createFurniture();
+        Furniture chair = chairFactory.createFurniture();
+        Furniture table = tableFactory.createFurniture();
+
+        // Display the created furniture items
+        sofa.display();
+        chair.display();
+        table.display();
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
+
 #include <iostream>
 #include <string>
 using namespace std;
