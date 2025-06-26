@@ -1,3 +1,64 @@
+enum Type {
+    SOFA,
+    TABLE,
+    CHAIR
+}
+
+interface Furniture {
+    void display(String name);
+}
+
+class Sofa implements Furniture {
+    public void display(String name) {
+        System.out.println("SOFA : " + name);
+    }
+}
+
+class Table implements Furniture {
+    public void display(String name) {
+        System.out.println("TABLE : " + name);
+    }
+}
+
+class Chair implements Furniture {
+    public void display(String name) {
+        System.out.println("CHAIR : " + name);
+    }
+}
+
+class FurnitureFactory {
+    static Furniture createFurniture(Type type) {
+        switch (type) {
+            case SOFA:
+                return new Sofa();
+            case TABLE:
+                return new Table();
+            case CHAIR:
+                return new Chair();
+            default:
+                return null;
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Furniture sofa = FurnitureFactory.createFurniture(Type.SOFA);
+        Furniture table = FurnitureFactory.createFurniture(Type.TABLE);
+        Furniture chair = FurnitureFactory.createFurniture(Type.CHAIR);
+
+        sofa.display("This is an sofa display name");
+        table.display("This is an table display name");
+        chair.display("This is a chair display name");
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
+
 #include <iostream>
 using namespace std;
 
