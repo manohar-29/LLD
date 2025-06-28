@@ -1,67 +1,68 @@
-// Abstract Product: Furniture Item
-interface Furniture {
+// Abstract Product: Account
+interface Account {
     void display();
 }
 
-// Concrete Products: Sofa, Chair, Table
-class Sofa implements Furniture {
+// Concrete Products: Savings, Current, Business
+class SavingsAccount implements Account {
     public void display() {
-        System.out.println("Sofa");
+        System.out.println("Savings Account");
     }
 }
 
-class Chair implements Furniture {
+class CurrentAccount implements Account {
     public void display() {
-        System.out.println("Chair");
+        System.out.println("Current Account");
     }
 }
 
-class Table implements Furniture {
+class BusinessAccount implements Account {
     public void display() {
-        System.out.println("Table");
+        System.out.println("Business Account");
     }
 }
 
-// Abstract Creator: Furniture Factory
-interface FurnitureFactory {
-    Furniture createFurniture();
+// Abstract Creator: AccountFactory
+interface AccountFactory {
+    Account createAccount();
 }
 
-// Concrete Creators: SofaFactory, ChairFactory, TableFactory
-class SofaFactory implements FurnitureFactory {
-    public Furniture createFurniture() {
-        return new Sofa();
+// Concrete Creators: SavingsFactory, CurrentFactory, BusinessFactory
+class SavingsAccountFactory implements AccountFactory {
+    public Account createAccount() {
+        return new SavingsAccount();
     }
 }
 
-class ChairFactory implements FurnitureFactory {
-    public Furniture createFurniture() {
-        return new Chair();
+class CurrentAccountFactory implements AccountFactory {
+    public Account createAccount() {
+        return new CurrentAccount();
     }
 }
 
-class TableFactory implements FurnitureFactory {
-    public Furniture createFurniture() {
-        return new Table();
+class BusinessAccountFactory implements AccountFactory {
+    public Account createAccount() {
+        return new BusinessAccount();
     }
 }
 
+// Main class
 public class Main {
     public static void main(String[] args) {
-        // Create factories for different types of furniture
-        FurnitureFactory sofaFactory = new SofaFactory();
-        FurnitureFactory chairFactory = new ChairFactory();
-        FurnitureFactory tableFactory = new TableFactory();
+        // Create factories for different types of accounts
+        AccountFactory savingsFactory = new SavingsAccountFactory();
+        AccountFactory currentFactory = new CurrentAccountFactory();
+        AccountFactory businessFactory = new BusinessAccountFactory();
 
-        // Create furniture objects using the factory methods
-        Furniture sofa = sofaFactory.createFurniture();
-        Furniture chair = chairFactory.createFurniture();
-        Furniture table = tableFactory.createFurniture();
+        // Create account objects using the factory methods
+        Account savings = savingsFactory.createAccount();
+        Account current = currentFactory.createAccount();
+        Account business = businessFactory.createAccount();
 
-        // Display the created furniture items
-        sofa.display();
-        chair.display();
-        table.display();
+        // Display the created account types
+        savings.display();
+        current.display();
+        business.display();
     }
 }
 
