@@ -1,3 +1,51 @@
+// Abstract Prototype
+interface Cuisine extends Cloneable {
+    Cuisine getClone();
+    void display();
+}
+
+// Concrete Prototype
+class IndianCuisine implements Cuisine {
+    private String name;
+    private double price;
+
+    public IndianCuisine(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    // Clone method using copy constructor logic
+    public Cuisine getClone() {
+        return new IndianCuisine(this.name, this.price);
+    }
+
+    public void display() {
+        System.out.println("Item: " + name);
+        System.out.println("Price: $" + price);
+    }
+}
+
+// Main Class
+public class Main {
+    public static void main(String[] args) {
+        // Create original cuisine object
+        Cuisine indianCuisine = new IndianCuisine("Chicken", 9999);
+
+        // Clone the object
+        Cuisine indianCuisineClone = indianCuisine.getClone();
+
+        // Display both
+        indianCuisine.display();
+        indianCuisineClone.display();
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
+
 #include <iostream>
 using namespace std;
 
