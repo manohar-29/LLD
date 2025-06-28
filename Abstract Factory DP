@@ -50,7 +50,7 @@ class MacCheckbox implements Checkbox {
 }
 
 // Abstract Factory
-interface GUIFactory {
+interface UIFactory {
     Button createButton();
     Scrollbar createScrollbar();
     Checkbox createCheckbox();
