@@ -1,3 +1,105 @@
+// Abstract Handler
+abstract class OrderHandler {
+    protected OrderHandler orderHandler;
+
+    public OrderHandler(OrderHandler nextHandler) {
+        this.orderHandler = nextHandler;
+    }
+
+    public abstract void processOrder(String order);
+}
+
+// Concrete Handler: Payment Processing
+class PaymentProcessingHandler extends OrderHandler {
+
+    public PaymentProcessingHandler(OrderHandler nextHandler) {
+        super(nextHandler);
+    }
+
+    public void processOrder(String order) {
+        System.out.println("Processing payment for order: " + order);
+
+        if (order.equals("Invalid order")) {
+            this.orderHandler = new InvalidOrderHandler(null);
+        }
+
+        if (orderHandler != null) {
+            orderHandler.processOrder(order);
+        }
+    }
+}
+
+// Concrete Handler: Delivery Assignment
+class DeliveryAssignmentHandler extends OrderHandler {
+
+    public DeliveryAssignmentHandler(OrderHandler nextHandler) {
+        super(nextHandler);
+    }
+
+    public void processOrder(String order) {
+        System.out.println("Assigning delivery for order: " + order);
+
+        if (orderHandler != null) {
+            orderHandler.processOrder(order);
+        }
+    }
+}
+
+// Concrete Handler: Order Tracking
+class OrderTrackingHandler extends OrderHandler {
+
+    public OrderTrackingHandler(OrderHandler nextHandler) {
+        super(nextHandler);
+    }
+
+    public void processOrder(String order) {
+        System.out.println("Tracking order: " + order);
+
+        if (orderHandler != null) {
+            orderHandler.processOrder(order);
+        }
+    }
+}
+
+// Concrete Handler: Invalid Order
+class InvalidOrderHandler extends OrderHandler {
+
+    public InvalidOrderHandler(OrderHandler nextHandler) {
+        super(nextHandler);
+    }
+
+    public void processOrder(String order) {
+        System.out.println("Invalid order: " + order);
+
+        if (orderHandler != null) {
+            orderHandler.processOrder(order);
+        }
+    }
+}
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+        OrderHandler handlerChain = new PaymentProcessingHandler(
+            new DeliveryAssignmentHandler(
+                new OrderTrackingHandler(null)
+            )
+        );
+
+        System.out.println("=== Valid Order ===");
+        handlerChain.processOrder("Pizza");
+
+        System.out.println("\n=== Invalid Order ===");
+        handlerChain.processOrder("Invalid order");
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
+
 #include <iostream>
 using namespace std;
 
