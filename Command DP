@@ -1,3 +1,97 @@
+// Receiver: Database
+class Database {
+    public void insert(String record) {
+        System.out.println("Inserting record: " + record);
+    }
+
+    public void update(String record) {
+        System.out.println("Updating record: " + record);
+    }
+
+    public void delete(String record) {
+        System.out.println("Deleting record: " + record);
+    }
+}
+
+// Command Interface
+interface Command {
+    void execute();
+}
+
+// Concrete Command: InsertCommand
+class InsertCommand implements Command {
+    private Database database;
+    private String record;
+
+    public InsertCommand(Database database, String record) {
+        this.database = database;
+        this.record = record;
+    }
+
+    public void execute() {
+        database.insert(record);
+    }
+}
+
+// Concrete Command: UpdateCommand
+class UpdateCommand implements Command {
+    private Database database;
+    private String record;
+
+    public UpdateCommand(Database database, String record) {
+        this.database = database;
+        this.record = record;
+    }
+
+    public void execute() {
+        database.update(record);
+    }
+}
+
+// Concrete Command: DeleteCommand
+class DeleteCommand implements Command {
+    private Database database;
+    private String record;
+
+    public DeleteCommand(Database database, String record) {
+        this.database = database;
+        this.record = record;
+    }
+
+    public void execute() {
+        database.delete(record);
+    }
+}
+
+// Invoker: DatabaseInvoker
+class DatabaseInvoker {
+    public void executeCommand(Command command) {
+        command.execute();
+    }
+}
+
+// Main class to test the design
+public class Main {
+    public static void main(String[] args) {
+        Database db = new Database();
+        DatabaseInvoker invoker = new DatabaseInvoker();
+
+        Command insert = new InsertCommand(db, "Record 1");
+        Command update = new UpdateCommand(db, "Record 1");
+        Command delete = new DeleteCommand(db, "Record 1");
+
+        invoker.executeCommand(insert);
+        invoker.executeCommand(update);
+        invoker.executeCommand(delete);
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
+
 #include <iostream>
 
 using namespace std;
