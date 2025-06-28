@@ -86,11 +86,8 @@ public class Main {
             )
         );
 
-        System.out.println("=== Valid Order ===");
         handlerChain.processOrder("Pizza");
 
-        System.out.println("\n=== Invalid Order ===");
-        handlerChain.processOrder("Invalid order");
     }
 }
 
