@@ -1,5 +1,5 @@
 // Abstract Prototype
-interface Cuisine extends Cloneable {
+interface Cuisine {
     Cuisine getClone();
     void display();
 }
