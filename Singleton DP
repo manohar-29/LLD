@@ -1,42 +1,43 @@
-public class PaymentGateway {
+public class Logger {
 
-    private static PaymentGateway instance;
+    private static Logger instance = null;
     private static final Object lock = new Object();
 
     // Private constructor
-    private PaymentGateway() {
-        System.out.println("Payment Gateway Manager initialized.");
+    private Logger() {
+        System.out.println("Logger initialized.");
     }
 
-    // Static method to get the single instance
-    public static PaymentGateway getInstance() {
-        if (instance == null) { // First null check (without lock)
+    // Public method to get the singleton instance
+    public static Logger getInstance() {
+        if (instance == null) {
             synchronized (lock) {
-                if (instance == null) { // Second null check (with lock)
-                    instance = new PaymentGateway();
+                if (instance == null) {
+                    instance = new Logger();
                 }
             }
         }
         return instance;
     }
 
-    public void processPayment(double amount) {
-        System.out.println("Processing payment of $" + amount + " through the payment gateway.");
+    // Method to log a message
+    public void log(String message) {
+        System.out.println("[LOG] " + message);
     }
 
-    // Main method to test
+    // Main method for testing
     public static void main(String[] args) {
-        PaymentGateway paymentGateway = PaymentGateway.getInstance();
-        paymentGateway.processPayment(1000);
+        Logger logger1 = Logger.getInstance();
+        logger1.log("This is the first log message.");
 
-        // Try to get another instance
-        PaymentGateway anotherPaymentGateway = PaymentGateway.getInstance();
+        Logger logger2 = Logger.getInstance();
+        logger2.log("This is the second log message.");
 
-        // Check if both instances are the same
-        if (paymentGateway == anotherPaymentGateway) {
-            System.out.println("Both instances are the same. Singleton pattern is working");
+        // Check if both references point to the same object
+        if (logger1 == logger2) {
+            System.out.println("Both logger instances are the same. Singleton pattern is working.");
         } else {
-            System.out.println("Singleton pattern is not working correctly");
+            System.out.println("Logger singleton is not working correctly.");
         }
     }
 }
