@@ -1,3 +1,134 @@
+// Abstract Products
+interface Button {
+    void render();
+}
+
+interface Scrollbar {
+    void scroll();
+}
+
+interface Checkbox {
+    void check();
+}
+
+// Concrete Products for Windows
+class WindowsButton implements Button {
+    public void render() {
+        System.out.println("Rendering Windows Button");
+    }
+}
+
+class WindowsScrollbar implements Scrollbar {
+    public void scroll() {
+        System.out.println("Scrolling Windows Scrollbar");
+    }
+}
+
+class WindowsCheckbox implements Checkbox {
+    public void check() {
+        System.out.println("Checking Windows Checkbox");
+    }
+}
+
+// Concrete Products for Mac
+class MacButton implements Button {
+    public void render() {
+        System.out.println("Rendering Mac Button");
+    }
+}
+
+class MacScrollbar implements Scrollbar {
+    public void scroll() {
+        System.out.println("Scrolling Mac Scrollbar");
+    }
+}
+
+class MacCheckbox implements Checkbox {
+    public void check() {
+        System.out.println("Checking Mac Checkbox");
+    }
+}
+
+// Abstract Factory
+interface GUIFactory {
+    Button createButton();
+    Scrollbar createScrollbar();
+    Checkbox createCheckbox();
+
+    static GUIFactory createGUIFactory(String type) {
+        if (type.equalsIgnoreCase("windows")) {
+            return new WindowsFactory();
+        } else if (type.equalsIgnoreCase("mac")) {
+            return new MacFactory();
+        } else {
+            return null;
+        }
+    }
+}
+
+// Concrete Factory for Windows
+class WindowsFactory implements GUIFactory {
+    public Button createButton() {
+        return new WindowsButton();
+    }
+
+    public Scrollbar createScrollbar() {
+        return new WindowsScrollbar();
+    }
+
+    public Checkbox createCheckbox() {
+        return new WindowsCheckbox();
+    }
+}
+
+// Concrete Factory for Mac
+class MacFactory implements GUIFactory {
+    public Button createButton() {
+        return new MacButton();
+    }
+
+    public Scrollbar createScrollbar() {
+        return new MacScrollbar();
+    }
+
+    public Checkbox createCheckbox() {
+        return new MacCheckbox();
+    }
+}
+
+// Main Class
+public class Main {
+    public static void main(String[] args) {
+        // Mac UI
+        GUIFactory macFactory = GUIFactory.createGUIFactory("mac");
+        Button macButton = macFactory.createButton();
+        Scrollbar macScrollbar = macFactory.createScrollbar();
+        Checkbox macCheckbox = macFactory.createCheckbox();
+
+        macButton.render();
+        macScrollbar.scroll();
+        macCheckbox.check();
+
+        System.out.println();
+
+        // Windows UI
+        GUIFactory windowsFactory = GUIFactory.createGUIFactory("windows");
+        Button winButton = windowsFactory.createButton();
+        Scrollbar winScrollbar = windowsFactory.createScrollbar();
+        Checkbox winCheckbox = windowsFactory.createCheckbox();
+
+        winButton.render();
+        winScrollbar.scroll();
+        winCheckbox.check();
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
+
 #include <iostream>
 
 // Abstract Product: Sofa
