@@ -1,3 +1,100 @@
+// Product
+class Desktop {
+    String processor;
+    String memory;
+    String storage;
+    String graphicsCard;
+
+    public void display() {
+        System.out.println("Processor: " + processor);
+        System.out.println("Memory: " + memory);
+        System.out.println("Storage: " + storage);
+        System.out.println("Graphics Card: " + graphicsCard);
+    }
+}
+
+// Abstract Builder
+abstract class DesktopBuilder {
+    protected Desktop desktop = new Desktop();
+
+    abstract void buildProcessor();
+    abstract void buildMemory();
+    abstract void buildStorage();
+    abstract void buildGraphicsCard();
+
+    public Desktop getDesktop() {
+        return desktop;
+    }
+}
+
+// Concrete Builder: Dell
+class DellDesktopBuilder extends DesktopBuilder {
+    void buildProcessor() {
+        desktop.processor = "Dell Processor";
+    }
+
+    void buildMemory() {
+        desktop.memory = "32GB DDR4 RAM";
+    }
+
+    void buildStorage() {
+        desktop.storage = "1TB SSD + 2TB HDD";
+    }
+
+    void buildGraphicsCard() {
+        desktop.graphicsCard = "NVIDIA RTX 3080";
+    }
+}
+
+// Concrete Builder: HP
+class HpDesktopBuilder extends DesktopBuilder {
+    void buildProcessor() {
+        desktop.processor = "Intel Core i5";
+    }
+
+    void buildMemory() {
+        desktop.memory = "16GB DDR4 RAM";
+    }
+
+    void buildStorage() {
+        desktop.storage = "512GB SSD";
+    }
+
+    void buildGraphicsCard() {
+        desktop.graphicsCard = "Integrated Graphics";
+    }
+}
+
+// Director
+class DesktopDirector {
+    public Desktop buildDesktop(DesktopBuilder builder) {
+        builder.buildProcessor();
+        builder.buildMemory();
+        builder.buildStorage();
+        builder.buildGraphicsCard();
+        return builder.getDesktop();
+    }
+}
+
+// Main Class
+public class Main {
+    public static void main(String[] args) {
+        DesktopDirector director = new DesktopDirector();
+
+        Desktop dellDesktop = director.buildDesktop(new DellDesktopBuilder());
+        Desktop hpDesktop = director.buildDesktop(new HpDesktopBuilder());
+
+        dellDesktop.display();
+        hpDesktop.display();
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
+
 #include <iostream>
 using namespace std;
 
