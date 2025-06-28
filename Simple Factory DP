@@ -1,40 +1,40 @@
-enum Type {
-    SOFA,
-    TABLE,
-    CHAIR
+enum AccountType {
+    SAVINGS,
+    CURRENT,
+    BUSINESS
 }
 
-interface Furniture {
+interface Account {
     void display(String name);
 }
 
-class Sofa implements Furniture {
+class SavingsAccount implements Account {
     public void display(String name) {
-        System.out.println("SOFA : " + name);
+        System.out.println("SAVINGS ACCOUNT : " + name);
     }
 }
 
-class Table implements Furniture {
+class CurrentAccount implements Account {
     public void display(String name) {
-        System.out.println("TABLE : " + name);
+        System.out.println("CURRENT ACCOUNT : " + name);
     }
 }
 
-class Chair implements Furniture {
+class BusinessAccount implements Account {
     public void display(String name) {
-        System.out.println("CHAIR : " + name);
+        System.out.println("BUSINESS ACCOUNT : " + name);
     }
 }
 
-class FurnitureFactory {
-    static Furniture createFurniture(Type type) {
+class AccountFactory {
+    static Account createAccount(AccountType type) {
         switch (type) {
-            case SOFA:
-                return new Sofa();
-            case TABLE:
-                return new Table();
-            case CHAIR:
-                return new Chair();
+            case SAVINGS:
+                return new SavingsAccount();
+            case CURRENT:
+                return new CurrentAccount();
+            case BUSINESS:
+                return new BusinessAccount();
             default:
                 return null;
         }
@@ -43,13 +43,13 @@ class FurnitureFactory {
 
 public class Main {
     public static void main(String[] args) {
-        Furniture sofa = FurnitureFactory.createFurniture(Type.SOFA);
-        Furniture table = FurnitureFactory.createFurniture(Type.TABLE);
-        Furniture chair = FurnitureFactory.createFurniture(Type.CHAIR);
+        Account savings = AccountFactory.createAccount(AccountType.SAVINGS);
+        Account current = AccountFactory.createAccount(AccountType.CURRENT);
+        Account business = AccountFactory.createAccount(AccountType.BUSINESS);
 
-        sofa.display("This is an sofa display name");
-        table.display("This is an table display name");
-        chair.display("This is a chair display name");
+        savings.display("Alice's Savings Account");
+        current.display("Bob's Current Account");
+        business.display("Carol's Business Account");
     }
 }
 
