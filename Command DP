@@ -65,7 +65,7 @@ class DeleteCommand implements Command {
 
 // Invoker: DatabaseInvoker
 class DatabaseInvoker {
-    public void executeCommand(Command command) {
+    public void processOperation(Command command) {
         command.execute();
     }
 }
@@ -80,9 +80,9 @@ public class Main {
         Command update = new UpdateCommand(db, "Record 1");
         Command delete = new DeleteCommand(db, "Record 1");
 
-        invoker.executeCommand(insert);
-        invoker.executeCommand(update);
-        invoker.executeCommand(delete);
+        invoker.processOperation(insert);
+        invoker.processOperation(update);
+        invoker.processOperation(delete);
     }
 }
 
