@@ -1,3 +1,52 @@
+public class PaymentGateway {
+
+    private static PaymentGateway instance;
+    private static final Object lock = new Object();
+
+    // Private constructor
+    private PaymentGateway() {
+        System.out.println("Payment Gateway Manager initialized.");
+    }
+
+    // Static method to get the single instance
+    public static PaymentGateway getInstance() {
+        if (instance == null) { // First null check (without lock)
+            synchronized (lock) {
+                if (instance == null) { // Second null check (with lock)
+                    instance = new PaymentGateway();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public void processPayment(double amount) {
+        System.out.println("Processing payment of $" + amount + " through the payment gateway.");
+    }
+
+    // Main method to test
+    public static void main(String[] args) {
+        PaymentGateway paymentGateway = PaymentGateway.getInstance();
+        paymentGateway.processPayment(1000);
+
+        // Try to get another instance
+        PaymentGateway anotherPaymentGateway = PaymentGateway.getInstance();
+
+        // Check if both instances are the same
+        if (paymentGateway == anotherPaymentGateway) {
+            System.out.println("Both instances are the same. Singleton pattern is working");
+        } else {
+            System.out.println("Singleton pattern is not working correctly");
+        }
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
+
 #include <iostream>
 using namespace std;
 
