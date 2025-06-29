@@ -1,3 +1,62 @@
+// Strategy interface
+interface PaymentStrategy {
+    void processPayment(double amount);
+}
+
+// Concrete Strategy: Credit Card
+class CreditCardPayment implements PaymentStrategy {
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("Processing credit card payment of $" + amount);
+    }
+}
+
+// Concrete Strategy: PayPal
+class PayPalPayment implements PaymentStrategy {
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("Processing PayPal payment of $" + amount);
+    }
+}
+
+// Context class: PaymentProcessor
+class PaymentProcessor {
+    private PaymentStrategy paymentStrategy;
+
+    public void setPaymentStrategy(PaymentStrategy strategy) {
+        this.paymentStrategy = strategy;
+    }
+
+    public void processPayment(double amount) {
+        if (paymentStrategy != null) {
+            paymentStrategy.processPayment(amount);
+        } else {
+            System.err.println("Payment strategy not set.");
+        }
+    }
+}
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+        PaymentProcessor processor = new PaymentProcessor();
+
+        // Set strategy to Credit Card
+        processor.setPaymentStrategy(new CreditCardPayment());
+        processor.processPayment(100.0);
+
+        // Change strategy to PayPal
+        processor.setPaymentStrategy(new PayPalPayment());
+        processor.processPayment(50.0);
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
+
 #include <iostream>
 using namespace std;
 
