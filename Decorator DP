@@ -1,3 +1,95 @@
+// Base interface (Component)
+interface FoodItem {
+    String getDescription();
+    double getPrice();
+}
+
+// Concrete Component: Pizza
+class Pizza implements FoodItem {
+    public String getDescription() {
+        return "Pizza";
+    }
+
+    public double getPrice() {
+        return 200.0;
+    }
+}
+
+// Concrete Component: Burger
+class Burger implements FoodItem {
+    public String getDescription() {
+        return "Burger";
+    }
+
+    public double getPrice() {
+        return 100.0;
+    }
+}
+
+// Decorator (Abstract Class)
+abstract class FoodDecorator implements FoodItem {
+    protected FoodItem foodItem;
+
+    public FoodDecorator(FoodItem item) {
+        this.foodItem = item;
+    }
+}
+
+// Concrete Decorator: Extra Cheese
+class ExtraCheeseDecorator extends FoodDecorator {
+    private double extraCheesePrice;
+
+    public ExtraCheeseDecorator(FoodItem item, double price) {
+        super(item);
+        this.extraCheesePrice = price;
+    }
+
+    public String getDescription() {
+        return foodItem.getDescription() + " with Extra Cheese";
+    }
+
+    public double getPrice() {
+        return foodItem.getPrice() + extraCheesePrice;
+    }
+}
+
+// Concrete Decorator: Extra Toppings
+class ExtraToppingsDecorator extends FoodDecorator {
+    private double extraToppingsPrice;
+
+    public ExtraToppingsDecorator(FoodItem item, double price) {
+        super(item);
+        this.extraToppingsPrice = price;
+    }
+
+    public String getDescription() {
+        return foodItem.getDescription() + " with Extra Toppings";
+    }
+
+    public double getPrice() {
+        return foodItem.getPrice() + extraToppingsPrice;
+    }
+}
+
+// Main class to test the implementation
+public class Main {
+    public static void main(String[] args) {
+        FoodItem burgerOrder = new Burger();
+
+        burgerOrder = new ExtraCheeseDecorator(burgerOrder, 20.0);
+        burgerOrder = new ExtraToppingsDecorator(burgerOrder, 15.0);
+
+        System.out.println("Description of burger order is: " + burgerOrder.getDescription());
+        System.out.println("Price of burger order is: ₹" + burgerOrder.getPrice());
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
+
 #include <iostream>
 using namespace std;
 
