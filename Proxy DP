@@ -1,3 +1,59 @@
+import java.util.Arrays;
+import java.util.List;
+
+// Subject Interface
+interface Internet {
+    void connectTo(String site);
+}
+
+// Real Subject
+class RealInternet implements Internet {
+    public void connectTo(String site) {
+        System.out.println("Connecting to " + site);
+    }
+}
+
+// Proxy
+class ProxyInternet implements Internet {
+    private RealInternet realInternet = new RealInternet();
+    private String user;
+    private static final List<String> blockedSites = Arrays.asList("restricted.com", "blockedsite.com");
+
+    public ProxyInternet(String user) {
+        this.user = user;
+    }
+
+    @Override
+    public void connectTo(String site) {
+        if (user.equals("guest") && blockedSites.contains(site)) {
+            System.out.println("Access Denied: '" + site + "' is blocked for user '" + user + "'");
+            return;
+        }
+        realInternet.connectTo(site);
+    }
+}
+
+// Client Code
+public class Main {
+    public static void main(String[] args) {
+        Internet guestInternet = new ProxyInternet("guest");
+        guestInternet.connectTo("example.com");      // Allowed
+        guestInternet.connectTo("restricted.com");   // Blocked
+
+        System.out.println();
+
+        Internet adminInternet = new ProxyInternet("admin");
+        adminInternet.connectTo("restricted.com");   // Allowed
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
+
+
 #include <iostream>
 #include <string>
 using namespace std;
