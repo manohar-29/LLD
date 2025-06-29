@@ -1,7 +1,74 @@
-/* forward declaration is necessary when you reference a class before it's fully defined. Line6-Line11 && Line17-Line47. */
+// State Interface
+interface TrafficLightState {
+    void handle(TrafficLight context);
+}
+
+// Context Class
+class TrafficLight {
+    private TrafficLightState currentState;
+
+    public TrafficLight() {
+        this.currentState = new RedState();  // Initial state
+    }
+
+    public void setState(TrafficLightState newState) {
+        this.currentState = newState;
+    }
+
+    public void operate() {
+        currentState.handle(this);
+    }
+}
+
+// Concrete State: Red
+class RedState implements TrafficLightState {
+    @Override
+    public void handle(TrafficLight context) {
+        System.out.println("RED: Stop for 60 seconds");
+        context.setState(new YellowState());
+    }
+}
+
+// Concrete State: Yellow
+class YellowState implements TrafficLightState {
+    @Override
+    public void handle(TrafficLight context) {
+        System.out.println("GREEN: Go for 45 seconds");
+        context.setState(new GreenState());
+    }
+}
+
+// Concrete State: Green
+class GreenState implements TrafficLightState {
+    @Override
+    public void handle(TrafficLight context) {
+        System.out.println("YELLOW: Prepare to stop for 5 seconds");
+        context.setState(new RedState());
+    }
+}
+
+// Main Class
+public class Main {
+    public static void main(String[] args) {
+        TrafficLight trafficLight = new TrafficLight();
+
+        // Simulate multiple state transitions
+        for (int i = 0; i < 6; i++) {
+            trafficLight.operate();
+        }
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
 
 #include <iostream>
 using namespace std;
+
+/* forward declaration is necessary when you reference a class before it's fully defined. Line6-Line11 && Line17-Line47. */
 
 class TrafficLight;  // Forward declaration
 
