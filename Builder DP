@@ -10,12 +10,17 @@ class Desktop {
         System.out.println("Memory: " + memory);
         System.out.println("Storage: " + storage);
         System.out.println("Graphics Card: " + graphicsCard);
+        System.out.println("--------------------------");
     }
 }
 
 // Abstract Builder
 abstract class DesktopBuilder {
-    protected Desktop desktop = new Desktop();
+    protected Desktop desktop;
+
+    public DesktopBuilder(Desktop desktop) {
+        this.desktop = desktop;
+    }
 
     abstract void buildProcessor();
     abstract void buildMemory();
@@ -29,6 +34,10 @@ abstract class DesktopBuilder {
 
 // Concrete Builder: Dell
 class DellDesktopBuilder extends DesktopBuilder {
+    public DellDesktopBuilder(Desktop desktop) {
+        super(desktop);
+    }
+
     void buildProcessor() {
         desktop.processor = "Dell Processor";
     }
@@ -48,6 +57,10 @@ class DellDesktopBuilder extends DesktopBuilder {
 
 // Concrete Builder: HP
 class HpDesktopBuilder extends DesktopBuilder {
+    public HpDesktopBuilder(Desktop desktop) {
+        super(desktop);
+    }
+
     void buildProcessor() {
         desktop.processor = "Intel Core i5";
     }
@@ -81,8 +94,12 @@ public class Main {
     public static void main(String[] args) {
         DesktopDirector director = new DesktopDirector();
 
-        Desktop dellDesktop = director.buildDesktop(new DellDesktopBuilder());
-        Desktop hpDesktop = director.buildDesktop(new HpDesktopBuilder());
+        // Create Desktop objects explicitly and pass to builders
+        Desktop dell = new Desktop();
+        Desktop hp = new Desktop();
+
+        Desktop dellDesktop = director.buildDesktop(new DellDesktopBuilder(dell));
+        Desktop hpDesktop = director.buildDesktop(new HpDesktopBuilder(hp));
 
         dellDesktop.display();
         hpDesktop.display();
