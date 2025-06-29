@@ -31,6 +31,7 @@ public class Main {
     public static void main(String[] args) {
         // Application code uses PaymentProcessor, unaware of the third-party details
         PaymentProcessor processor = new PaymentGatewayAdapter();
+        processor.pay(1999.99);
     }
 }
 
