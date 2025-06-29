@@ -6,6 +6,9 @@ abstract class OrderHandler {
         this.orderHandler = nextHandler;
     }
 
+    /* Base class has a constructor that expects a nextHandler. super(nextHandler) passes that nextHandler to the 
+       constructor of the base class OrderHandler, which stores it in this.orderHandler. */
+
     public abstract void processOrder(String order);
 }
 
