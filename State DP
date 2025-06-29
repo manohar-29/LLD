@@ -3,23 +3,6 @@ interface TrafficLightState {
     void handle(TrafficLight context);
 }
 
-// Context Class
-class TrafficLight {
-    private TrafficLightState currentState;
-
-    public TrafficLight() {
-        this.currentState = new RedState();  // Initial state
-    }
-
-    public void setState(TrafficLightState newState) {
-        this.currentState = newState;
-    }
-
-    public void operate() {
-        currentState.handle(this);
-    }
-}
-
 // Concrete State: Red
 class RedState implements TrafficLightState {
     @Override
@@ -44,6 +27,23 @@ class GreenState implements TrafficLightState {
     public void handle(TrafficLight context) {
         System.out.println("YELLOW: Prepare to stop for 5 seconds");
         context.setState(new RedState());
+    }
+}
+
+// Context Class
+class TrafficLight {
+    private TrafficLightState currentState;
+
+    public TrafficLight() {
+        this.currentState = new RedState();  // Initial state
+    }
+
+    public void setState(TrafficLightState newState) {
+        this.currentState = newState;
+    }
+
+    public void operate() {
+        currentState.handle(this);
     }
 }
 
