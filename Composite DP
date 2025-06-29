@@ -1,3 +1,94 @@
+import java.util.*;
+
+// Abstraction Layer
+interface FileSystem {
+    void getContents();
+    int getSize();
+}
+
+// Concrete Implementation: File
+class File implements FileSystem {
+    private String name;
+    private int size;
+
+    public File(String fileName, int fileSize) {
+        this.name = fileName;
+        this.size = fileSize;
+    }
+
+    @Override
+    public void getContents() {
+        System.out.println("File: " + name);
+    }
+
+    @Override
+    public int getSize() {
+        return size;
+    }
+}
+
+// Concrete Implementation: Directory
+class Directory implements FileSystem {
+    private String name;
+    private List<FileSystem> contents;
+
+    public Directory(String dirName) {
+        this.name = dirName;
+        this.contents = new ArrayList<>();
+    }
+
+    public void addComponent(FileSystem component) {
+        contents.add(component);
+    }
+
+    @Override
+    public void getContents() {
+        System.out.println("Directory: " + name);
+        for (FileSystem component : contents) {
+            component.getContents();
+        }
+    }
+
+    @Override
+    public int getSize() {
+        int totalSize = 0;
+        for (FileSystem component : contents) {
+            totalSize += component.getSize();
+        }
+        return totalSize;
+    }
+}
+
+// Main class
+public class directorystructure {
+    public static void main(String[] args) {
+        Directory root = new Directory("Root");
+
+        FileSystem file1 = new File("Document.txt", 100);
+        FileSystem file2 = new File("Image.jpg", 200);
+
+        Directory subDir = new Directory("Subdirectory");
+        FileSystem file3 = new File("Data.csv", 150);
+
+        subDir.addComponent(file3);
+
+        root.addComponent(file1);
+        root.addComponent(file2);
+        root.addComponent(subDir);
+
+        // Print contents and total size
+        root.getContents();
+        int totalSize = root.getSize();
+        System.out.println("Total Size: " + totalSize + " KB");
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
+
 #include <iostream>
 
 using namespace std;
