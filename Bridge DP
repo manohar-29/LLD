@@ -1,3 +1,89 @@
+// Implementation Layer
+interface NavigationImpl {
+    void navigateTo(String destination);
+}
+
+// Concrete Implementation: Google Maps
+class GoogleMaps implements NavigationImpl {
+    public void navigateTo(String destination) {
+        System.out.println("Google Maps.");
+        // Actual navigation logic using Google Maps API
+    }
+}
+
+// Concrete Implementation: Apple Maps
+class AppleMaps implements NavigationImpl {
+    public void navigateTo(String destination) {
+        System.out.println("Apple Maps.");
+        // Actual navigation logic using Apple Maps API
+    }
+}
+
+// Abstraction Layer
+abstract class NavigationSystem {
+    protected NavigationImpl navigationImpl;
+
+    public void setNavigationImpl(NavigationImpl impl) {
+        this.navigationImpl = impl;
+    }
+
+    public abstract void navigate(String destination);
+}
+
+// Concrete Abstraction: UberRide
+class UberRide extends NavigationSystem {
+    private String driverName;
+
+    public UberRide(String driverName) {
+        this.driverName = driverName;
+    }
+
+    @Override
+    public void navigate(String destination) {
+        System.out.print("Uber ride with " + driverName + " to " + destination + " using ");
+        navigationImpl.navigateTo(destination);
+    }
+}
+
+// Concrete Abstraction: UberEats
+class UberEats extends NavigationSystem {
+    private String restaurantName;
+
+    public UberEats(String restaurantName) {
+        this.restaurantName = restaurantName;
+    }
+
+    @Override
+    public void navigate(String destination) {
+        System.out.print("Uber Eats delivery from " + restaurantName + " to " + destination + " using ");
+        navigationImpl.navigateTo(destination);
+    }
+}
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+        UberRide uberRide = new UberRide("Keerti");
+
+        NavigationImpl googleMaps = new GoogleMaps();
+        uberRide.setNavigationImpl(googleMaps);
+        uberRide.navigate("Central Park");
+
+        System.out.println();
+
+        UberEats uberEats = new UberEats("Pizza Hut");
+        NavigationImpl appleMaps = new AppleMaps();
+        uberEats.setNavigationImpl(appleMaps);
+        uberEats.navigate("Times Square");
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
+
 #include <iostream>
 
 using namespace std;
