@@ -1,3 +1,103 @@
+// Abstract class representing the template for order processing
+abstract class OrderProcessingTemplate {
+
+    // Template method (final so subclasses can't override it)
+    public final void processOrder() {
+        verifyOrder();
+        assignDeliveryAgent();
+        trackDelivery();
+        if (hook()) {
+            getReview();
+        }
+    }
+
+    // Abstract methods to be implemented by subclasses
+    protected abstract void verifyOrder();
+    protected abstract void assignDeliveryAgent();
+    protected abstract void trackDelivery();
+
+    // As all subclasses may not implement, it should not be abstract
+    protected void getReview() {
+        // Default empty implementation
+    }
+
+    // Hook method: can control flow
+    protected boolean hook() {
+        return true;
+    }
+}
+
+// Concrete subclass for processing local orders
+class LocalOrderProcessor extends OrderProcessingTemplate {
+    @Override
+    protected void verifyOrder() {
+        System.out.println("Verifying local order...");
+    }
+
+    @Override
+    protected void assignDeliveryAgent() {
+        System.out.println("Assigning a local delivery agent...");
+    }
+
+    @Override
+    protected void trackDelivery() {
+        System.out.println("Tracking local delivery...");
+    }
+
+    @Override
+    protected void getReview() {
+        System.out.println("Get review for local delivery...");
+    }
+
+    @Override
+    protected boolean hook() {
+        return true;
+    }
+}
+
+// Concrete subclass for processing international orders
+class InternationalOrderProcessor extends OrderProcessingTemplate {
+    @Override
+    protected void verifyOrder() {
+        System.out.println("Verifying international order...");
+    }
+
+    @Override
+    protected void assignDeliveryAgent() {
+        System.out.println("Assigning an international delivery agent...");
+    }
+
+    @Override
+    protected void trackDelivery() {
+        System.out.println("Tracking international delivery...");
+    }
+
+    @Override
+    protected boolean hook() {
+        return false; // Skip getReview
+    }
+}
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+        OrderProcessingTemplate localOrder = new LocalOrderProcessor();
+        OrderProcessingTemplate internationalOrder = new InternationalOrderProcessor();
+
+        System.out.println("Processing a local order:");
+        localOrder.processOrder();
+
+        System.out.println("\nProcessing an international order:");
+        internationalOrder.processOrder();
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
+
 #include <iostream>
 using namespace std;
 
