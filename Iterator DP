@@ -1,3 +1,129 @@
+import java.util.*;
+
+// PlaylistIterator Interface
+interface PlaylistIterator {
+    boolean hasNext();
+    String next();
+}
+
+// Playlist Class
+class Playlist {
+    private ArrayList<String> songs;
+
+    public Playlist() {
+        songs = new ArrayList<>();
+    }
+
+    public void addSong(String song) {
+        songs.add(song);
+    }
+
+    public PlaylistIterator iterator(String type) {
+        switch (type) {
+            case "sorted":
+                return new SortedPlaylistIterator(this);
+            case "favorites":
+                return new FavoritesPlaylistIterator(this);
+            default:
+                return null;
+        }
+    }
+
+    public ArrayList<String> getSongs() {
+        return songs;
+    }
+}
+
+// SortedPlaylistIterator (Sorts songs alphabetically)
+class SortedPlaylistIterator implements PlaylistIterator {
+    private List<String> sortedSongs;
+    private int index;
+
+    public SortedPlaylistIterator(Playlist playlist) {
+        this.sortedSongs = new ArrayList<>(playlist.getSongs());
+        Collections.sort(this.sortedSongs); // sort alphabetically
+        this.index = 0;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return index < sortedSongs.size();
+    }
+
+    @Override
+    public String next() {
+        return sortedSongs.get(index++);
+    }
+}
+
+// FavoritesPlaylistIterator (Only songs with "Fav" in the name)
+class FavoritesPlaylistIterator implements PlaylistIterator {
+    private List<String> favSongs;
+    private Playlist playlist;
+    private int index;
+    private boolean flag;
+
+    public FavoritesPlaylistIterator(Playlist playlist) {
+        this.favSongs = new ArrayList<>();
+        this.playlist = playlist;
+        this.index = 0;
+        this.flag = true;
+    }
+
+    @Override
+    public boolean hasNext() {
+        if (flag) {
+          flag = false;
+          int ind = 0;
+          while (ind < playlist.getSongs().size()) {
+            if (playlist.getSongs().get(ind).contains("Fav")) {
+                favSongs.add(playlist.getSongs().get(ind));
+            }
+            ind++;
+          }
+        }
+        return index < favSongs.size();
+    }
+
+    @Override
+    public String next() {
+        return favSongs.get(index++);
+    }
+}
+
+// Main Class
+public class Main {
+    public static void main(String[] args) {
+        // Create a playlist
+        Playlist playlist = new Playlist();
+        playlist.addSong("Song 1");
+        playlist.addSong("Song 2 Fav");
+        playlist.addSong("Alpha Song");
+        playlist.addSong("Beta Fav");
+        playlist.addSong("Zebra");
+
+        // Sorted Playlist Iterator
+        System.out.println("Sorted Playlist:");
+        PlaylistIterator sortedIterator = playlist.iterator("sorted");
+        while (sortedIterator.hasNext()) {
+            System.out.println("Playing: " + sortedIterator.next());
+        }
+
+        // Favorites Playlist Iterator
+        System.out.println("\nFavorites Playlist:");
+        PlaylistIterator favoritesIterator = playlist.iterator("favorites");
+        while (favoritesIterator.hasNext()) {
+            System.out.println("Playing: " + favoritesIterator.next());
+        }
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
+
 #include <iostream>
 
 using namespace std;
