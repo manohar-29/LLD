@@ -1,3 +1,45 @@
+// Target interface expected by your system
+interface PaymentProcessor {
+    void pay(double amount);
+}
+
+// Adaptee - third-party class with a different interface
+class PaymentGateway {
+    public void makePayment(String amountInString) {
+        System.out.println("Processing payment of ₹" + amountInString + " using PaymentGateway (third-party).");
+    }
+}
+
+// Adapter - makes PaymentGateway compatible with PaymentProcessor
+class PaymentGatewayAdapter implements PaymentProcessor {
+    private PaymentGateway gateway;
+
+    public PaymentGatewayAdapter() {
+        this.gateway = new PaymentGateway();
+    }
+
+    @Override
+    public void pay(double amount) {
+        // Convert double to string as expected by third-party class
+        String amountStr = String.format("%.2f", amount);
+        gateway.makePayment(amountStr);
+    }
+}
+
+// Client code
+public class Main {
+    public static void main(String[] args) {
+        // Application code uses PaymentProcessor, unaware of the third-party details
+        PaymentProcessor processor = new PaymentGatewayAdapter();
+    }
+}
+
+
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+#######################################################################################################################################################################
+
+
 #include <iostream>
 using namespace std;
 
