@@ -1,3 +1,67 @@
+// Subsystem 1: CPU
+class CPU {
+    public void powerOn() {
+        System.out.println("CPU is powered on.");
+    }
+
+    public void powerOff() {
+        System.out.println("CPU is powered off.");
+    }
+}
+
+// Subsystem 2: Memory
+class Memory {
+    public void initialize() {
+        System.out.println("Memory is initialized.");
+    }
+}
+
+// Subsystem 3: Disk
+class Disk {
+    public void boot() {
+        System.out.println("Booting from the disk.");
+    }
+}
+
+// Facade: ComputerFacade
+class ComputerFacade {
+    private CPU cpu;
+    private Memory memory;
+    private Disk disk;
+
+    public ComputerFacade() {
+        this.cpu = new CPU();
+        this.memory = new Memory();
+        this.disk = new Disk();
+    }
+
+    public void startComputer() {
+        System.out.println("Starting the computer...");
+        cpu.powerOn();
+        memory.initialize();
+        disk.boot();
+    }
+
+    public void stopComputer() {
+        cpu.powerOff();
+        System.out.println("Shutting down the computer...");
+    }
+}
+
+// Main Class
+public class Main {
+    public static void main(String[] args) {
+        ComputerFacade computer = new ComputerFacade();
+
+        computer.startComputer();
+        computer.stopComputer();
+    }
+}
+
+
+
+
+
 #include <iostream>
 using namespace std;
 
