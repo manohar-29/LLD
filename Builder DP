@@ -1,108 +1,102 @@
+/* So here we encapsulated Builder class inside Desktop and made it static. So byheart this notation that if you made class static 'B'
+by encapsulating it inside another class 'D' then you cannot access 'B' methods using D.B.method(), you need object so for such static 
+classes we use, D.B obj = new D.B(); Now you can use it to call B's methods. Instead we can keep them separately and normally create 
+builder object as well but Builder DP should use static class. Now we have Desktop with fields and while creating object we can pass 
+few or all of the parameters. So for optional fields instead of default we can also pass values. So, in Desktop class we don't have any
+setters(except for mutable fields that can be modified by other class) and there are only getters() as it can be used by some class later. 
+We basically build object in Builder class using methods for setiing optional fields and they will be called only if object don't want
+them to take default value. For mandatory fields we pass parameters while creating Builder object. We have build() which creates Desktop
+by passing Builder object to D's constructor which copies all fields. So basically both D and B declare all fields, D creates object
+with field values as B object and B use methods for optional fields, constructor for mandatory fields. If you want same mandatory field then
+use same B object else different one. */
+
 // Product
 class Desktop {
+    int id;
     String processor;
     String memory;
     String storage;
     String graphicsCard;
-
-    public void display() {
-        System.out.println("Processor: " + processor);
-        System.out.println("Memory: " + memory);
-        System.out.println("Storage: " + storage);
-        System.out.println("Graphics Card: " + graphicsCard);
-        System.out.println("--------------------------");
-    }
-}
-
-// Abstract Builder
-abstract class DesktopBuilder {
-    protected Desktop desktop;
-
-    public DesktopBuilder(Desktop desktop) {
-        this.desktop = desktop;
+    
+    private Desktop(DesktopBuilder builder)
+    {
+        this.processor = processor;
+        this.memory = memory;
+        this.storage = storage;
     }
 
-    abstract void buildProcessor();
-    abstract void buildMemory();
-    abstract void buildStorage();
-    abstract void buildGraphicsCard();
-
-    public Desktop getDesktop() {
-        return desktop;
+    public int getId()
+    {
+        return this.id;
     }
-}
-
-// Concrete Builder: Dell
-class DellDesktopBuilder extends DesktopBuilder {
-    public DellDesktopBuilder(Desktop desktop) {
-        super(desktop);
+    public String getProcessor()
+    {
+        return this.processor;
     }
-
-    void buildProcessor() {
-        desktop.processor = "Dell Processor";
+    public String getMemory()
+    {
+        return this.memory;
     }
-
-    void buildMemory() {
-        desktop.memory = "32GB DDR4 RAM";
+    public String getStorage()
+    {
+        return this.storage;
+    }
+    
+    public void getStorage(String str)
+    {
+        this.storage = str;
     }
 
-    void buildStorage() {
-        desktop.storage = "1TB SSD + 2TB HDD";
-    }
+    public static class DesktopBuilder {
+        int id;
+        String processor = "default";
+        String memory = "default";
+        String storage = "default";
+        String graphicsCard = "default";
 
-    void buildGraphicsCard() {
-        desktop.graphicsCard = "NVIDIA RTX 3080";
-    }
-}
-
-// Concrete Builder: HP
-class HpDesktopBuilder extends DesktopBuilder {
-    public HpDesktopBuilder(Desktop desktop) {
-        super(desktop);
-    }
-
-    void buildProcessor() {
-        desktop.processor = "Intel Core i5";
-    }
-
-    void buildMemory() {
-        desktop.memory = "16GB DDR4 RAM";
-    }
-
-    void buildStorage() {
-        desktop.storage = "512GB SSD";
-    }
-
-    void buildGraphicsCard() {
-        desktop.graphicsCard = "Integrated Graphics";
-    }
-}
-
-// Director
-class DesktopDirector {
-    public Desktop buildDesktop(DesktopBuilder builder) {
-        builder.buildProcessor();
-        builder.buildMemory();
-        builder.buildStorage();
-        builder.buildGraphicsCard();
-        return builder.getDesktop();
+        public DesktopBuilder(int id) {
+            this.id =id;
+        }
+        
+        public DesktopBuilder setProcessor(String str) {
+            this.processor = str;
+            return this;
+        }
+        public DesktopBuilder setMemory(String str) {
+            this.memory = str;
+            return this;
+        }
+        public DesktopBuilder setStorage(String str) {
+            this.storage = str;
+            return this;
+        }
+        public DesktopBuilder setGraphicCard(String str) {
+            this.graphicsCard = str;
+            return this;
+        }
+        
+        public Desktop build()
+        {
+            return new Desktop(this);
+        }
     }
 }
 
 // Main Class
 public class Main {
     public static void main(String[] args) {
-        DesktopDirector director = new DesktopDirector();
+        
+        Desktop.DesktopBuilder builder1 = new Desktop.DesktopBuilder(123);
+        Desktop desktop1 = builder1.setProcessor("")
+                            .setMemory("")
+                            .setStorage("")
+                            .build();
 
-        // Create Desktop objects explicitly and pass to builders
-        Desktop dell = new Desktop();
-        Desktop hp = new Desktop();
-
-        Desktop dellDesktop = director.buildDesktop(new DellDesktopBuilder(dell));
-        Desktop hpDesktop = director.buildDesktop(new HpDesktopBuilder(hp));
-
-        dellDesktop.display();
-        hpDesktop.display();
+        Desktop.DesktopBuilder builder2 = new Desktop.DesktopBuilder(789);
+        Desktop desktop2 = builder2.setProcessor("")
+                            .setMemory("")
+                            .build();
+    
     }
 }
 
