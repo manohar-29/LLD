@@ -15,7 +15,7 @@ class RealInternet implements Internet {
 
 // Proxy
 class ProxyInternet implements Internet {
-    private RealInternet realInternet = new RealInternet();
+    private RealInternet realInternet;
     private String user;
     private static final List<String> blockedSites = Arrays.asList("restricted.com", "blockedsite.com");
 
@@ -29,6 +29,7 @@ class ProxyInternet implements Internet {
             System.out.println("Access Denied: '" + site + "' is blocked for user '" + user + "'");
             return;
         }
+        realInternet = new RealInternet();
         realInternet.connectTo(site);
     }
 }
